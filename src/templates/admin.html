@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <title>Producer Dashboard</title>
+    <style>
+        table a {
+            color: blue;
+        }
+
+        a {
+            color: white;
+            text-decoration: none;
+            outline: none;
+        }
+
+        a:hover {
+            color: red;
+            /* Change the color on hover as desired */
+            text-decoration: underline;
+            /* Add underline on hover */
+        }
+
+        .active a {
+            color: yellow;
+            /* Change the color of active link */
+        }
+
+        table {
+            border: 5px solid #ccc;
+            border-collapse: collapse;
+            margin: 50px;
+            padding: 0;
+            width: 94%;
+            table-layout: auto;
+        }
+
+        .title {
+            text-align: center;
+            margin-bottom: -40px;
+        }
+
+        table tr {
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            padding: .35em;
+        }
+
+        table th,
+        table td {
+            padding: 10px;
+            text-align: center;
+            white-space: nowrap; /* prevent wrapping */
+            overflow: hidden; /* hide overflowing content */
+            text-overflow: ellipsis; /* show ellipsis for overflow */
+        }
+
+        table th {
+            font-size: .85em;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+        }
+
+        table td[data-label="Wallet Address"] {
+            white-space: pre-wrap; /* wrap the text */
+        }
+
+        table td[data-label="Wallet Address"]:hover::before {
+            content: attr(data-fulltext);
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            border-radius: 5px;
+            z-index: 999;
+            white-space: normal;
+            max-width: 300px;
+            word-wrap: break-word;
+        }
+
+        @media screen and (max-width: 600px) {
+            table {
+                border: 0;
+            }
+
+            title {
+                font-size: 1.3em;
+            }
+
+            table thead {
+                border: none;
+                clip: rect(0 0 0 0);
+                height: 1px;
+                margin: -1px;
+                overflow: hidden;
+                padding: 0;
+                position: absolute;
+                width: 1px;
+            }
+
+            table tr {
+                border-bottom: 3px solid #ddd;
+                display: block;
+                margin-bottom: .625em;
+            }
+
+            table td {
+                border-bottom: 1px solid #ddd;
+                display: block;
+                font-size: .8em;
+                text-align: right;
+                white-space: nowrap; /* prevent wrapping */
+                overflow: hidden; /* hide overflowing content */
+                text-overflow: ellipsis; /* show ellipsis for overflow */
+            }
+
+            table td::before {
+                content: attr(data-label);
+                float: left;
+                font-weight: bold;
+                text-transform: uppercase;
+            }
+
+            table td:last-child {
+                border-bottom: 0;
+            }
+        }
+
+        body {
+            font-family: "Open Sans", sans-serif;
+            line-height: 1.25;
+        }
+
+        .nav-container {
+            width: 100%;
+            height: 75px;
+            background-color: rgb(2, 67, 64);
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            padding: 0 2rem;
+            box-shadow: 0px 0px 1rem gray;
+            filter: drop-shadow(0 0 10px #000);
+        }
+
+        #menu {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #menu li {
+            list-style-type: none;
+            margin: 35%;
+            font-size: 1.3rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-shadow: 2px 1px 1px #000;
+            cursor: pointer;
+        }
+
+        #menu li:hover {
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            text-decoration-color: red;
+            cursor: pointer;
+            font-weight: 900;
+        }
+
+        .menubtn {
+            display: none;
+            font-size: 35px;
+            cursor: pointer;
+        }
+
+        @media only screen and (max-width: 600px) {
+            #menu {
+                display: none;
+            }
+
+            #menu li {
+                margin: 1rem;
+                height: 30px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .menubtn {
+                display: block;
+                font-size: 35px;
+            }
+
+            #menu {
+                width: 100%;
+                background-color: lightseagreen;
+                position: absolute;
+                top: 4.6rem;
+                right: 0;
+                text-align: center;
+            }
+
+            #menu li:hover {
+                filter: saturate(150%) drop-shadow(1px 1px 3rem red);
+                text-shadow: 0px 0px 5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="nav-container">
+        <ul id="menu">
+            <li class="active"><a href="/admindashboard" class="active">Home</a></li>
+            <li style="color:white"><a href="/iotplug">IoT&nbsp;Plug</a></li>
+            <li style="color: white"><a href="/logout">Logout</a></li>
+        </ul>
+    </div> <br /><br />
+    <h3 class="title">Order Details</h3>
+    <table>
+        <thead>
+            <tr>
+                <th scope="col">Order Id</th>
+                <th colspan="4">Wallet Address</th>
+                <th scope="col">Status</th>
+                <th scope="col">Name</th>
+                <th scope="col">Location</th>
+                <th colspan="2">Type</th>
+                <th scope="col">Kgs</th>
+                <th scope="col">Action1</th>
+                <th scope="col">Action2</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in data %}
+                <tr>
+                    <td data-label="Order Id">{{ i[0] }}</td>
+                    <td colspan="4">{{i[1]}}</td>
+                    <td data-label="Status">{{ i[2] }}</td>
+                    <td data-label="Name">{{ i[3] }}</td>
+                    <td data-label="Location">{{ i[4] }}</td>
+                    <td data-label="Type" colspan="2">{{ i[5] }}</td>
+                    <td data-label="Kgs">{{ i[6] }}</td>
+                    {%if i[2]==0%}
+                        <th scope="col"><a class="btn btn-success" href="/confirmOrder/{{i[0]}}/1">Confirm</button></th>
+                        <th scope="col"><a class="btn btn-danger" href="/confirmOrder/{{i[0]}}/2">Cancel</button></th>
+                    {%endif%}
+                    {%if i[2]==1%}
+                        <th scope="col"><label>Confirmed</label></th>
+                        <th scope="col"><a class="btn btn-warning" href="/confirmOrder/{{i[0]}}/3">Deliver</a></th>
+                    {%endif%}
+                    {%if i[2]==2%}
+                        <th scope="col"><label>Rejected</label></th>
+                        <th scope="col"><label>Cancelled</label></th>
+                    {%endif%}
+                    {%if i[2]==3%}
+                        <th scope="col"><label>Confirmed</label></th>
+                        <th scope="col"><label>Delivered</label></th>
+                    {%endif%}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
+

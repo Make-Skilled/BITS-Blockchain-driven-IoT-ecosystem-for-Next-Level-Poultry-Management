@@ -1,0 +1,475 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Retailer Dashboard</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+
+        a {
+            color: white;
+            text-decoration: none;
+            outline: none;
+        }
+
+        a:hover {
+            color: red; /* Change the color on hover as desired */
+            text-decoration: underline; /* Add underline on hover */
+        }
+
+        .active a {
+            color: yellow; /* Change the color of active link */
+        }
+
+        table a {
+            color: blue;
+        }
+        .nav-container {
+            width: 100%;
+            height: 75px;
+            background-color: -webkit-linear-gradient(left, #003366, #004080, #0059b3, #0073e6);
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            padding: 0 2rem;
+            box-shadow: 0px 0px 1rem gray;
+            filter: drop-shadow(0 0 10px #000);
+        }
+
+        #menu {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #menu li {
+            list-style-type: none;
+            margin: 35%;
+            font-size: 1.3rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-shadow: 2px 1px 1px #000;
+            cursor: pointer;
+        }
+
+        #menu li:hover {
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            text-decoration-color: red;
+            cursor: pointer;
+            font-weight: 900;
+        }
+
+        .menubtn {
+            display: none;
+            font-size: 35px;
+            cursor: pointer;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        html,
+        body {
+            display: grid;
+            height: 100%;
+            width: 100%;
+            place-items: center;
+            background: -webkit-linear-gradient(left, #003366, #004080, #0059b3, #0073e6);
+        }
+
+        ::selection {
+            background: #1a75ff;
+            color: #fff;
+        }
+
+        .wrapper {
+            overflow: hidden;
+            max-width: 1250px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .wrapper .title-text {
+            display: flex;
+            width: 200%;
+        }
+
+        .wrapper .title {
+            width: 50%;
+            font-size: 35px;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .wrapper .slide-controls {
+            position: relative;
+            display: flex;
+            height: 50px;
+            width: 100%;
+            overflow: hidden;
+            margin: 30px 0 10px 0;
+            justify-content: space-between;
+            border: 1px solid lightgrey;
+            border-radius: 15px;
+        }
+
+        .slide-controls .slide {
+            height: 100%;
+            width: 100%;
+            color: #fff;
+            font-size: 18px;
+            font-weight: 500;
+            text-align: center;
+            line-height: 48px;
+            cursor: pointer;
+            z-index: 1;
+            transition: all 0.6s ease;
+        }
+
+        .slide-controls label.signup {
+            color: #000;
+        }
+
+        .slide-controls .slider-tab {
+            position: absolute;
+            height: 100%;
+            width: 50%;
+            left: 0;
+            z-index: 0;
+            border-radius: 15px;
+            background: -webkit-linear-gradient(left, #003366, #004080, #0059b3, #0073e6);
+            transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        input[type="radio"] {
+            display: none;
+        }
+
+        #signup:checked~.slider-tab {
+            left: 50%;
+        }
+
+        #signup:checked~label.signup {
+            color: #fff;
+            cursor: default;
+            user-select: none;
+        }
+
+        #signup:checked~label.login {
+            color: #000;
+        }
+
+        #login:checked~label.signup {
+            color: #000;
+        }
+
+        #login:checked~label.login {
+            cursor: default;
+            user-select: none;
+        }
+
+        .wrapper .form-container {
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .form-container .form-inner {
+            display: flex;
+            width: 200%;
+        }
+
+        .form-container .form-inner form {
+            width: 50%;
+            transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .form-inner form .field {
+            height: 50px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .form-inner form .field input {
+            height: 100%;
+            width: 100%;
+            outline: none;
+            padding-left: 15px;
+            border-radius: 15px;
+            border: 1px solid lightgrey;
+            border-bottom-width: 2px;
+            font-size: 17px;
+            transition: all 0.3s ease;
+        }
+
+        .form-inner form .field input:focus {
+            border-color: #1a75ff;
+            /* box-shadow: inset 0 0 3px #fb6aae; */
+        }
+
+        .form-inner form .field input::placeholder {
+            color: #999;
+            transition: all 0.3s ease;
+        }
+
+        form .field input:focus::placeholder {
+            color: #1a75ff;
+        }
+
+        .form-inner form .pass-link {
+            margin-top: 5px;
+        }
+
+        .form-inner form .signup-link {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .form-inner form .pass-link a,
+        .form-inner form .signup-link a {
+            color: #1a75ff;
+            text-decoration: none;
+        }
+
+        .form-inner form .pass-link a:hover,
+        .form-inner form .signup-link a:hover {
+            text-decoration: underline;
+        }
+
+        form .btn {
+            height: 50px;
+            width: 100%;
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        form .btn .btn-layer {
+            height: 100%;
+            width: 300%;
+            position: absolute;
+            left: -100%;
+            background: -webkit-linear-gradient(right, #003366, #004080, #0059b3, #0073e6);
+            border-radius: 15px;
+            transition: all 0.4s ease;
+            ;
+        }
+
+        form .btn:hover .btn-layer {
+            left: 0;
+        }
+
+        form .btn input[type="submit"] {
+            height: 100%;
+            width: 100%;
+            z-index: 1;
+            position: relative;
+            background: none;
+            border: none;
+            color: #fff;
+            padding-left: 0;
+            border-radius: 15px;
+            font-size: 20px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td,
+        th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+        button{
+            cursor: pointer;
+        }
+        a{
+            cursor: pointer;            
+        }
+        .data{
+            margin-bottom: -300px;
+        }
+        
+        
+    </style>
+</head>
+
+<body>
+    <div class="nav-container">
+        <ul id="menu">
+            <li class="active"><a href="/retailerdashboard" class="active">Home</a></li>
+            <li style="color:white"><a href="/riotplug">IoT&nbsp;Plug</a></li>
+            <li style="color: white"><a href="/logout">Logout</a></li>
+        </ul>
+    </div> <br /><br />
+    
+    <div class="wrapper">
+        <div class="title-text">
+            <div class="title login">Receiving</div>
+            <div class="title signup">Sending</div>
+        </div>
+        <div class="form-container">
+            <div class="slide-controls">
+                <input type="radio" name="slide" id="login" checked>
+                <input type="radio" name="slide" id="signup">
+                <label for="login" class="slide login">Receive Order</label>
+                <label for="signup" class="slide signup">Send Order</label>
+                <div class="slider-tab"></div>
+            </div>
+            <div class="form-inner">
+                <form action="#" class="login">
+                    <table class="table table-responsive">   
+                        <tr>
+                            <th>Order Id</th>
+                            <th>Order Status</th>
+                            <th>Wallet Address</th>
+                            <th>Consumer Name</th>
+                            <th>Consumer Location</th>
+                            <th>KGs</th>
+                            <th>Product Type</th>
+                            <th>Action1</th>
+                            <th>Action2</th>
+                        </tr>
+                        {%for i in data1%}
+                            <tr>
+                                <td>{{i[0]}}</td>
+                                <td>{{i[1]}}</td>
+                                <td>{{i[2]}}</td>
+                                <td>{{i[3]}}</td>
+                                <td>{{i[4]}}</td>
+                                <td>{{i[5]}}</td>
+                                <td>{{i[6]}}</td>
+
+                                {%if i[1]==0%}
+                                    <th scope="col"><a class="btn btn-success" href="/confirmOrder1/{{i[0]}}/1">Confirm</button></th>
+                                    <th scope="col"><a class="btn btn-danger" href="/confirmOrder1/{{i[0]}}/2">Cancel</button></th>
+                                {%endif%}
+                                {%if i[1]==1%}
+                                    <th scope="col"><label>Confirmed</label></th>
+                                    <th scope="col"><a class="btn btn-warning" href="/confirmOrder1/{{i[0]}}/3">Deliver</a></th>
+                                {%endif%}
+                                {%if i[1]==2%}
+                                    <th scope="col"><label>Rejected</label></th>
+                                    <th scope="col"><label>Cancelled</label></th>
+                                {%endif%}
+                                {%if i[1]==3%}
+                                    <th scope="col"><label>Confirmed</label></th>
+                                    <th scope="col"><label>Delivered</label></th>
+                                {%endif%}
+                            </tr>
+                        {%endfor%}
+                        
+                    </table>
+                </form>
+                <form action="/sendtoAdminFromRetailerForm" class="signup" method="post">
+                    <div class="field">
+                        <input type="text" placeholder="Wallet Address" name="wallet" required>
+                    </div>
+                    <div class="field">
+                        <input type="text" placeholder="Name" name="name" required>
+                    </div>
+                    <div class="field">
+                        <input type="text" placeholder="Location" name="location" required>
+                    </div>
+                    <div class="field">
+                        <input type="number" placeholder="Ammount of KG's" name="kgs" required>
+                    </div>
+                    <div class="field">
+
+                        <input type="text" placeholder="Type of Product" name="producttype" required>
+                    </div>
+
+                    <div class="field btn">
+                        <div class="btn-layer"></div>
+                        <input type="submit" value="Submit">
+                    </div>
+                    <span style="color:green">{{res}}</span>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="data">
+        <div class="container col-sm-12">
+            <h2>My Orders</h2>
+            <table class="table table-responsive table-bordered">
+                <tr>
+                    <th>Retailer Contact</th>
+                    <th>Order Status</th>
+                    <th>Order Id</th>
+                    <th>Wallet Address</th>
+                    <th>Name of Retailer</th>
+                    <th>Retailer Location</th>
+                    <th>Quantity (KGs)</th>
+                    <th>Type</th>
+                </tr>
+            {%for i in data2%}
+                <tr>
+                    <td>{{i[0]}}</td>
+                    {%if i[1]==0 %}
+                        <td>Order Not Accepted Yet</td>
+                    {%endif%}
+                    {%if i[1]==1 %}
+                        <td>Order Accepted, Yet to Deliver</td>
+                    {%endif%}
+                    {%if i[1]==2 %}
+                        <td>Order Rejected</td>
+                    {%endif%}
+                    {%if i[1]==3 %}
+                        <td>Order Delivered</td>
+                    {%endif%}
+                    <!-- <td>{{i[1]}}</td> -->
+                    <td>{{i[2]}}</td>
+                    <td>{{i[3]}}</td>
+                    <td>{{i[4]}}</td>
+                    <td>{{i[5]}}</td>
+                    <td>{{i[6]}}</td>
+                    <td>{{i[7]}}</td>
+                </tr>
+            {%endfor%}
+            </table>
+        </div>
+    </div>
+    
+    <script>
+        const loginText = document.querySelector(".title-text .login");
+        const loginForm = document.querySelector("form.login");
+        const loginBtn = document.querySelector("label.login");
+        const signupBtn = document.querySelector("label.signup");
+        const signupLink = document.querySelector("form .signup-link a");
+        signupBtn.onclick = (() => {
+            loginForm.style.marginLeft = "-50%";
+            loginText.style.marginLeft = "-50%";
+        });
+        loginBtn.onclick = (() => {
+            loginForm.style.marginLeft = "0%";
+            loginText.style.marginLeft = "0%";
+        });
+        signupLink.onclick = (() => {
+            signupBtn.click();
+            return false;
+        });
+
+    </script>
+</body>
+
+</html>

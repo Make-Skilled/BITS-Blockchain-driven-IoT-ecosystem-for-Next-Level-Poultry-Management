@@ -1,0 +1,240 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign-up</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 100%;
+            height: 100%;
+            color: #fff;
+            background-color: lightgray;
+            overflow-x: hidden;
+            /* background-image: url(https://png.pngtree.com/thumb_back/fh260/back_our/20190621/ourmid/pngtree-green-ecological-chicken-farm-background-material-image_191307.jpg);  */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .nav-container {
+            width: 100%;
+            height: 75px;
+            background-color: rgb(2, 67, 64);
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            padding: 0 2rem;
+            box-shadow: 0px 0px 1rem gray;
+            filter: drop-shadow(0 0 10px #000);
+        }
+        .container {
+            display: none;
+            text-align: center;
+            
+        }
+
+        .container.active {
+            display: block;
+        }
+
+        #menu {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #menu li {
+            list-style-type: none;
+            margin: 35%;
+            font-size: 1.3rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-shadow: 2px 1px 1px #000;
+        }
+
+        #menu li:hover {
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            text-decoration-color: red;
+            cursor: pointer;
+            font-weight: 900;
+        }
+
+        .menubtn {
+            display: none;
+            font-size: 35px;
+            cursor: pointer;
+        }
+
+        @media only screen and (max-width: 600px) {
+            #menu {
+                display: none;
+            }
+
+            #menu li {
+                margin: 1rem;
+                height: 40px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .menubtn {
+                display: block;
+                font-size: 35px;
+            }
+
+            #menu {
+                width: 100%;
+                background-color: lightseagreen;
+                position: absolute;
+                top: 4.6rem;
+                right: 0;
+                text-align: center;
+            }
+
+            #menu li:hover {
+                filter: saturate(150%) drop-shadow(1px 1px 3rem red);
+                text-shadow: 0px 0px 5rem;
+            }
+        }
+
+        /* ----------------------------------------signup page------------------------------------ */
+        
+        .title{
+            position: absolute;
+            left: 42%;
+            color: rgb(21, 71, 68);
+            margin-top: -5%;
+            font-size: 2rem;
+            font-weight: 800;
+        }
+        
+        
+        form {
+            background: rgba(141, 139, 139, 0.25);
+            backdrop-filter: blur(10px);
+            width: 100%;
+            height: 48%;
+            border: 1px 0 1px 1px solid black;
+            margin-left: 50%;
+            transform: translateX(-50%);
+            margin-top: 20vh;
+        
+        }
+
+        form input {
+            transition: 0.1s;
+            outline: none;
+            border: 1px solid rgb(218, 218, 218);
+            width: 90%;
+            margin-left: 50%;
+            transform: translateX(-50%);
+            padding: 20px;
+            margin-top: 10px;
+            background: rgba(255, 255, 255, 0.442);
+            font-size: 1rem;
+            font-weight: 400;
+            letter-spacing: 2px;
+        }
+
+        form button {
+            width: 70%;
+            color: white;
+            background-color: rgb(36, 140, 166);
+            border: none;
+            padding: 10px;
+            margin-left: 50%;
+            transform: translateX(-50%);
+            margin-top: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 400;
+            letter-spacing: 2px;
+        }
+        span{
+            color: black;
+        }
+        .btn-2{
+            width: 70%;
+            color: white;
+            background-color: rgb(2, 23, 28);
+            border: none;
+            padding: 10px;
+            margin-left: 50%;
+            transform: translateX(-50%);
+            margin-top: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 400;
+            letter-spacing: 2px;
+        }
+
+        @media(min-width:800px) {
+            form {
+                width: 550px;
+            }
+        }
+
+        form span {
+            color: red;
+            font-family: sans-serif;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="nav-container">
+        <ul id="menu">
+            <li onclick="showSignUp('retailer') ">Retailer/Restaurants</li>
+            <li onclick="showSignUp('consumer')">Consumer</li>
+        </ul>
+    </div>
+
+    <div class="container active" id="retailer-container">
+        <h3 class="title">Retailer Sign-up</h3>
+        <form action="/retailerreg" method="post">
+            <input id="retailer-name" type="text" placeholder="Enter Your name" name="name" required/>
+            <input id="retailer-email" type="email" placeholder="Enter Your Email" name="email"required/>
+            <input id="retailer-password" type="password" placeholder="Enter Your Password" name="password" required/>
+            <input id="retailer-phno" type="tel" placeholder="Enter Your Mobile Number" name="phone" required/>
+            
+            <button type="submit" class="btn-1">Sign up</button>
+        </form>
+        <span> Already have an account <a href="/retailerlog">Signin</a></span>
+        <span style="color:blue">{{msg}}</span>
+    </div>
+
+    <div class="container" id="consumer-container">
+        <h3 class="title">Consumer Sign-up</h3>
+        <form action="/consumerreg" method="post">
+            <input id="consumer-name" type="text" placeholder="Enter Your name" name="name" required/>
+            <input id="consumer-email" type="email" placeholder="Enter Your Email" name="email" required/>
+            <input id="consumer-password" type="password" placeholder="Enter Your Password" name="password" required/>
+            <input id="consumer-phno" type="tel" placeholder="Enter Your Mobile Number" name="phone" required/>
+            
+            <button type="submit" class="btn-2">Sign up</button>
+        </form>
+        <span> Already have an account <a href="/consumerlog">Signin</a></span>
+        <span style="color:blue">{{msg1}}</span>
+    </div>
+
+    <script>
+        function showSignUp(userType) {
+            // Hide all containers
+            document.querySelectorAll('.container').forEach(container => {
+                container.classList.remove('active');
+            });
+
+            // Show the selected container
+            document.getElementById(`${userType}-container`).classList.add('active');
+        }
+    </script>
+</body>
+</html>

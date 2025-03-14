@@ -1,0 +1,141 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+    position: relative;
+}
+
+#background-video {
+    width: 100%;
+    min-height: 100vh;
+    object-fit: cover;  
+    position: relative;
+    filter: brightness(0.5);
+}
+
+nav {
+    display: flex;
+    padding: 2% 6%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav img {
+    width: auto;
+    height: 50px; /* Adjust height as needed */
+}
+
+.nav-links {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.nav-links ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links ul li {
+    display: inline-block;
+    margin-left: 20px; /* Adjust spacing between nav items */
+}
+
+.nav-links a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    text-transform: uppercase;
+}
+
+.nav-links ul li::after {
+    content: '';
+    width: 0%;
+    height: 2px;
+    background: #ff0000;
+    display: block;
+    margin: auto;
+    transition: 0.5s;
+}
+
+.nav-links ul li:hover::after {
+    width: 100%;
+}
+
+.text-box {
+    width: 90%;
+    color: #fff;
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    text-align: center;
+}
+
+.text-box h1 {
+    font-size: 62px;
+    font-weight: 600;
+    color: #fff;
+    transition: 0.5s;
+}
+
+.text-box h1:hover{
+    -webkit-text-stroke: 2px #fff;
+    color: transparent;
+}
+
+.text-box p {
+    margin: 10px 0 40px;
+    font-size: 14px;
+    color: #fff;
+}
+
+.hero-btn {
+    display: inline-block;
+    text-decoration: none;
+    color: #fff;
+    font-size: 24px;
+    border: 2px solid white;
+    padding: 14px 70px;
+    border-radius: 50px;
+    margin-top: 20px;
+}
+
+    </style>
+</head>
+<body>
+    <section class="header">
+        <video id="background-video" autoplay loop muted>
+            <source src="./image/production_id_4911802 (2160p).mp4" type="video/mp4">
+        </video>
+        <nav>
+            <div class="nav-links" id="navLinks">
+
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/reg">Sign-up</a></li>
+                    <li><a href="/log">Sign-in</a></li>
+                    <li><a href="#About">About</a></li>
+                    <li><a href="#footer">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
+        <div class="text-box">
+            <h1>Secure Poultry Farming</h1>
+            <p>Welcome to our dedicated platform for secure poultry farming, where innovation meets reliability to
+                ensure the highest standards of safety and productivity.</p>
+            <a href="#About" class="hero-btn">View more</a>
+        </div>
+    </section>
+    
+</body>
+</html>

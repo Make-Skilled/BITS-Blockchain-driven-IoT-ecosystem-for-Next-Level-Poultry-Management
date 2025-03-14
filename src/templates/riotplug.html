@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>IoT Plug</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+
+    a {
+        color: white;
+        text-decoration: none;
+        outline: none;
+    }
+
+    a:hover {
+        color: red; /* Change the color on hover as desired */
+        text-decoration: underline; /* Add underline on hover */
+    }
+
+    .active a {
+        color: yellow; /* Change the color of active link */
+    }
+
+    table a {
+        color: blue;
+    }
+    .nav-container {
+        width: 100%;
+        height: 75px;
+        background-color: -webkit-linear-gradient(left, #003366, #004080, #0059b3, #0073e6);
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        padding: 0 2rem;
+        box-shadow: 0px 0px 1rem gray;
+        filter: drop-shadow(0 0 10px #000);
+    }
+
+    #menu {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #menu li {
+        list-style-type: none;
+        margin: 35%;
+        font-size: 1.3rem;
+        font-weight: 800;
+        letter-spacing: 2px;
+        text-shadow: 2px 1px 1px #000;
+        cursor: pointer;
+    }
+
+    #menu li:hover {
+        text-decoration: underline;
+        text-underline-offset: 4px;
+        text-decoration-color: red;
+        cursor: pointer;
+        font-weight: 900;
+    }
+
+    .menubtn {
+        display: none;
+        font-size: 35px;
+        cursor: pointer;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    html,
+    body {
+        display: grid;
+        height: 100%;
+        width: 100%;
+        place-items: center;
+        background: -webkit-linear-gradient(left, #003366, #004080, #0059b3, #0073e6);
+    }
+
+    ::selection {
+        background: #1a75ff;
+        color: #fff;
+    }
+
+    .wrapper {
+        overflow: hidden;
+        max-width: 550px;
+        background: #fff;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .wrapper .title-text {
+        display: flex;
+        width: 200%;
+    }
+
+    .wrapper .title {
+        width: 50%;
+        font-size: 35px;
+        font-weight: 600;
+        text-align: center;
+        transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    .wrapper .slide-controls {
+        position: relative;
+        display: flex;
+        height: 50px;
+        width: 100%;
+        overflow: hidden;
+        margin: 30px 0 10px 0;
+        justify-content: space-between;
+        border: 1px solid lightgrey;
+        border-radius: 15px;
+    }
+
+    .slide-controls .slide {
+        height: 100%;
+        width: 100%;
+        color: #fff;
+        font-size: 18px;
+        font-weight: 500;
+        text-align: center;
+        line-height: 48px;
+        cursor: pointer;
+        z-index: 1;
+        transition: all 0.6s ease;
+    }
+
+    .slide-controls label.signup {
+        color: #000;
+    }
+
+    .slide-controls .slider-tab {
+        position: absolute;
+        height: 100%;
+        width: 50%;
+        left: 0;
+        z-index: 0;
+        border-radius: 15px;
+        background: -webkit-linear-gradient(left, #003366, #004080, #0059b3, #0073e6);
+        transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    input[type="radio"] {
+        display: none;
+    }
+
+    #signup:checked~.slider-tab {
+        left: 50%;
+    }
+
+    #signup:checked~label.signup {
+        color: #fff;
+        cursor: default;
+        user-select: none;
+    }
+
+    #signup:checked~label.login {
+        color: #000;
+    }
+
+    #login:checked~label.signup {
+        color: #000;
+    }
+
+    #login:checked~label.login {
+        cursor: default;
+        user-select: none;
+    }
+
+    .wrapper .form-container {
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .form-container .form-inner {
+        display: flex;
+        width: 200%;
+    }
+
+    .form-container .form-inner form {
+        width: 50%;
+        transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    .form-inner form .field {
+        height: 50px;
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    .form-inner form .field input {
+        height: 100%;
+        width: 100%;
+        outline: none;
+        padding-left: 15px;
+        border-radius: 15px;
+        border: 1px solid lightgrey;
+        border-bottom-width: 2px;
+        font-size: 17px;
+        transition: all 0.3s ease;
+    }
+
+    .form-inner form .field input:focus {
+        border-color: #1a75ff;
+        /* box-shadow: inset 0 0 3px #fb6aae; */
+    }
+
+    .form-inner form .field input::placeholder {
+        color: #999;
+        transition: all 0.3s ease;
+    }
+
+    form .field input:focus::placeholder {
+        color: #1a75ff;
+    }
+
+    .form-inner form .pass-link {
+        margin-top: 5px;
+    }
+
+    .form-inner form .signup-link {
+        text-align: center;
+        margin-top: 30px;
+    }
+
+    .form-inner form .pass-link a,
+    .form-inner form .signup-link a {
+        color: #1a75ff;
+        text-decoration: none;
+    }
+
+    .form-inner form .pass-link a:hover,
+    .form-inner form .signup-link a:hover {
+        text-decoration: underline;
+    }
+
+    form .btn {
+        height: 50px;
+        width: 100%;
+        border-radius: 15px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    form .btn .btn-layer {
+        height: 100%;
+        width: 300%;
+        position: absolute;
+        left: -100%;
+        background: -webkit-linear-gradient(right, #003366, #004080, #0059b3, #0073e6);
+        border-radius: 15px;
+        transition: all 0.4s ease;
+        ;
+    }
+
+    form .btn:hover .btn-layer {
+        left: 0;
+    }
+
+    form .btn input[type="submit"] {
+        height: 100%;
+        width: 100%;
+        z-index: 1;
+        position: relative;
+        background: none;
+        border: none;
+        color: #fff;
+        padding-left: 0;
+        border-radius: 15px;
+        font-size: 20px;
+        font-weight: 500;
+        cursor: pointer;
+    }
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td,
+    th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+    button{
+        cursor: pointer;
+    }
+    a{
+        cursor: pointer;            
+    }
+    
+    
+</style>
+</head>
+<body>
+    <div class="nav-container">
+        <ul id="menu">
+            <li style="color:white"><a href="/retailerdashboard" >Home</a></li>
+            <li class="active" ><a href="/riotplug" class="active">IoT&nbsp;Plug</a></li>
+            <li style="color: white"><a href="/logout">Logout</a></li>
+        </ul>
+    </div> <br /><br />
+    <br/><br/>
+    
+            <center><h3 style="color:white">Humidity Sensory Feed</h3>
+                <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/2464568/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&type=line&update=15"></iframe>
+            </center>
+            <center><h3 style="color:white">Temperature Sensory Feed</h3>
+                <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/2464568/charts/2?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&type=line&update=15"></iframe>
+            </center>
+            <center><h3 style="color:white">Gas Sensory Feed</h3>
+                <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/2464568/charts/3?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&type=line&update=15"></iframe>
+            </center>            
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+</body>
+</html>

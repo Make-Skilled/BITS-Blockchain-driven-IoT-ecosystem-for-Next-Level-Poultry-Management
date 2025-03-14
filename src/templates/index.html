@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>Secure Poultry</title>
+    <link rel="stylesheet" href="/static/css/index.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/index.css') }}">
+</head>
+<body>
+    <section class="header">
+        <video id="background-video" autoplay loop muted>
+            <source src="https://player.vimeo.com/progressive_redirect/playback/440022064/rendition/360p/file.mp4?loc=external&oauth2_token_id=1747418641&signature=dc4850bde1d27a424d8db2603a610e85680174039e6b3f56597f9e2cc06a3f42" type="video/mp4">
+        </video>
+        <nav>
+            <div class="nav-links" id="navLinks">
+                <!-- <img src="/templates/image/logo.png" class="logo"/> -->
+                <ul>
+                    <li><a href="/" style="--i:1;">Home</a></li>
+                    <li><a href="/reg" style="--i:2;">Sign-up</a></li>
+                    <li><a href="/log" style="--i:3;">Sign-in</a></li>
+                    <li><a href="#About" style="--i:4;">About</a></li>
+                    <li><a href="#footer" style="--i:5;">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
+        <div class="text-box">
+            <h1>Secure Poultry Farming</h1>
+            <p>Welcome to our dedicated platform for secure poultry farming, where innovation meets reliability to
+                ensure the highest standards of safety and productivity.</p>
+            <a href="#About" class="hero-btn">View more</a>
+        </div>
+    </section>
+
+    <section class="course" id="About">
+        <h1>Quality innovation and food safety</h1>
+        <p class="p1"> Trust in our commitment to secure, sustainable, and successful poultry farming practices for a flourishing
+            future.</p>
+        <div class="row">
+            <div class="course-col">
+                <h2>Internet of Things</h2>
+                <p>IoT transforms secure poultry management by deploying sensors in chicken farms to monitor key
+                    variables like temperature, humidity, and air quality in real-time.These devices continuously
+                    observe the farm environment, providing instant and accurate information to farmers.
+                    By seamlessly integrating IoT, chicken farms leverage real-time information from monitoring devices,
+                    empowering farmers to make data-driven decisions for optimal poultry health and secure management.
+                </p>
+            </div>
+
+            <div class="course-col">
+                <h2>IPFS</h2>
+                <p>The utilization of the InterPlanetary File System (IPFS) offers a cost-effective and secure solution
+                    for data storage. As IoT sensors generate a plethora of real-time information in chicken farms, IPFS
+                    provides a decentralized and efficient platform to store this data.
+                    By leveraging IPFS, the system ensures data integrity and accessibility for authorized users, such
+                    as farm administrators.
+                </p>
+            </div>
+
+            <div class="course-col">
+                <h2>Blockchain</h2>
+                <p>Blockchain enhances secure poultry management by providing an immutable and transparent ledger for
+                    recording critical farm data. In chicken farms, blockchain ensures the integrity of information
+                    related to health records, environmental conditions, and supply chain processes.
+                    This technology improves traceability, accountability, and overall security in poultry management by
+                    creating a trustworthy and decentralized record-keeping system.
+                </p>
+            </div>
+        </div>
+    </section>
+    <!--------------------------------------services---------------------------------------->
+    <section id="services" class="service">
+        <h1 class="title">Services for the best clients</h1>
+        <div class="container">
+            <div class="grid-1">
+                <img
+                    src="https://media.istockphoto.com/id/1217649450/photo/chicken-or-hen-on-a-green-meadow.jpg?s=612x612&w=0&k=20&c=zRlZTkwoc-aWb3kI10OqlRLbiQw3R3_KUIchNVFgYgw=" />
+                <h3>The best Poultry</h3>
+                <p>Discover poultry at its finest, offering a delectable combination of flavor, tenderness, and quality
+                    that stands above the rest.</p>
+            </div>
+            <div class="grid-2">
+                <img
+                    src="https://media.istockphoto.com/id/1469253548/photo/small-newborn-chick-stands-on-green-grass-spring-mood-background-for-an-easter-greeting-or-a.webp?b=1&s=170667a&w=0&k=20&c=iJuO_5AryZaV8UE689xpXxTGBUadED_LSGh6Lo55A4A=" />
+                <h3>Chick quality</h3>
+                <p>Our dedication to chick quality goes beyond standards, ensuring every hatchling embodies health,
+                    vitality, optimal growth.</p>
+            </div>
+            <div class="grid-3">
+                <img
+                    src="https://media.istockphoto.com/id/1474901155/photo/fresh-organic-chicken-eggs.webp?b=1&s=170667a&w=0&k=20&c=_0jY3vl0eJvN9YSD0N0mx0MxUA1A8zfC39y0IHnNJYo=" />
+                <h3>Pasteurized Egg</h3>
+                <p>Elevate your culinary experience with our pasteurized eggs, providing a trustworthy of
+                    freshness and safety for you and your family.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-------------------------Main-------------------------------------------------->
+    <section class="main">
+        <!-- <div class="logo">
+            <a href="index.html"><img src="image/logo-1.png" id="logo-img-1"></a>
+        </div> -->
+        <div class="content">
+            <h1 class="content-h1">Modern Poultry Farming</h1>
+            <p class="content-p">We are industry-leading organic farm delivering the best products that boost your daily
+                life energy and potential.</p>
+            <a href="#About" class="hero-btn-1">Our Services</a>
+        </div>
+    </section>
+
+    <!------------------------------------Image slider---------------------------------------->
+    <section class="slider">
+        <h1 class="title">Check Our <strong>Image Gallery</strong></h1>
+        <div class="slideshow-container">
+            <div class="mySlides fade">
+                <img src="https://static.vecteezy.com/system/resources/previews/030/637/817/large_2x/eggs-image-hd-free-photo.jpg"
+                    style="width:100%">
+            </div>
+            <div class="mySlides fade">
+                <img src="https://st.depositphotos.com/1005951/3102/i/450/depositphotos_31026773-stock-photo-chickens.jpg"
+                    style="width:100%">
+            </div>
+            <div class="mySlides fade">
+                <img src="https://www.pelletizermill.com/wp-content/uploads/2023/09/how-to-make-homemade-chicken-feed-scaled.webp"
+                    style="width:100%">
+
+            </div>
+            <div class="mySlides fade">
+                <img src="https://img.freepik.com/free-photo/raw-chicken-breasts-wooden-cutting-board_1150-13465.jpg"
+                    style="width:100%">
+            </div>
+        </div>
+        <br>
+        <div style="text-align:center">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+        </div>
+    </section>
+    <!---------------------------------------Footer-------------------------------->
+    <section id="footer">
+        <div class="main-footer">
+            <div class="logoinfo" data-aos="fade-up">
+                <h1 class="foot-h1">Secure Poultry</h1>
+                <h4>
+                    <p>BITS</p>
+                </h4>
+
+                <div class="contact-details">
+                    <h1 class="foot-h1">Contact Us</h1>
+                    <li>
+                        <div class="fa fa-phone"></div><a href="tel:+919898989898">+91 9898989898</a>
+                    </li>
+                    <li>
+                        <div class="fa fa-envelope"></div><a
+                            href="mailto:bits@gmail.com">bits@gmail.com</a>
+                    </li>
+
+                </div>
+            </div>
+            <div class="com " data-aos="fade-up">
+                <h1 class="foot-h1">Quick Links</h1>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Our Services</a></li>
+                    <li><a href="#">Contacts</a></li>
+                </ul>
+            </div>
+            <div class="info" data-aos="fade-up">
+                <h1 class="foot-h1">Connect with us:</h1>
+                <div class="sociallogos">
+                    <div class="logobox">
+                        <a href="#"><i class='bx bxl-instagram-alt'></i></a>
+                        <a href="#"><i class='bx bxl-gmail'></i></a>
+                        <a href="#"><i class='bx bxl-facebook'></i></a>
+                        <a href="#"><i class='bx bxl-youtube'></i></a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <footer>© Your Copyright 2024 All Rights Reserved</footer>
+    </section>
+    <script>
+        let slideIndex = 0;
+        showSlides();
+
+        function showSlides() {
+            let i;
+            let slides = document.getElementsByClassName("mySlides");
+            let dots = document.getElementsByClassName("dot");
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            slideIndex++;
+            if (slideIndex > slides.length) { slideIndex = 1 }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndex - 1].style.display = "block";
+            dots[slideIndex - 1].className += " active";
+            setTimeout(showSlides, 2000); // Change image every 2 seconds
+        }
+    </script>
+</body>
+</html>

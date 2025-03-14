@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>IoT Plug</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    a {
+        color: blue;
+        text-decoration: none;
+        outline: none;
+    }
+
+    a:hover {
+        color: red; /* Change the color on hover as desired */
+        text-decoration: underline; /* Add underline on hover */
+    }
+
+    .active a {
+        color: yellow; /* Change the color of active link */
+    }
+
+    table a {
+        color: blue;
+    }
+    .nav-container {
+        width: 100%;
+        height: 75px;
+        background-color: #f4f4f4;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        padding: 0 2rem;
+        box-shadow: 0px 0px 1rem gray;
+        filter: drop-shadow(0 0 10px #000);
+    }
+
+    #menu {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #menu li {
+        list-style-type: none;
+        margin: 35%;
+        font-size: 1.3rem;
+        font-weight: 800;
+        letter-spacing: 2px;
+        text-shadow: 2px 1px 1px #000;
+        cursor: pointer;
+    }
+
+    #menu li:hover {
+        text-decoration: underline;
+        text-underline-offset: 4px;
+        text-decoration-color: red;
+        cursor: pointer;
+        font-weight: 900;
+    }
+
+    .menubtn {
+        display: none;
+        font-size: 35px;
+        cursor: pointer;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        display: block;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        
+    }
+
+    form {
+        background-color: #fff;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 600px;
+        height: 400px;
+    }
+
+    .field {
+        margin-bottom: 20px;
+    }
+
+    input {
+        width: 100%;
+        height: 50px;
+        padding: 10px;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 14px;
+    }
+
+    .field.btn {
+        text-align: center;
+    }
+
+    input[type="submit"] {
+        background-color: #4caf50;
+        color: #fff;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #45a049;
+    }
+</style>
+</head>
+<body>
+    <div class="nav-container">
+        <ul id="menu">
+            <li style="color:white"><a href="/consumerdashboard" >Home</a></li>
+            <li class="active" ><a href="/ciotplug" class="active">IoT&nbsp;Plug</a></li>
+            <li style="color: white"><a href="/logout">Logout</a></li>
+        </ul>
+    </div> <br /><br />
+    <br/><br/>
+    
+            <center><h3 style="color:black">Humidity Sensory Feed</h3>
+                <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/2464568/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&type=line&update=15"></iframe>
+            </center>
+            <center><h3 style="color:black">Temperature Sensory Feed</h3>
+                <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/2464568/charts/2?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&type=line&update=15"></iframe>
+            </center>
+            <center><h3 style="color:black">Gas Sensory Feed</h3>
+                <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/2464568/charts/3?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&type=line&update=15"></iframe>
+            </center>            
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+</body>
+</html>
