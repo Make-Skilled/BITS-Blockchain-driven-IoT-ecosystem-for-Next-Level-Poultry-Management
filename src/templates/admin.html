@@ -4,271 +4,360 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-        crossorigin="anonymous">
-    <title>Producer Dashboard</title>
+    <title>Admin Dashboard - Poultry Management System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        table a {
-            color: blue;
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-
-        a {
+        .nav-container {
+            background-color: #2c3e50;
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .nav-container a {
             color: white;
             text-decoration: none;
-            outline: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background-color 0.3s;
         }
-
-        a:hover {
-            color: red;
-            /* Change the color on hover as desired */
-            text-decoration: underline;
-            /* Add underline on hover */
+        .nav-container a:hover {
+            background-color: #34495e;
         }
-
-        .active a {
-            color: yellow;
-            /* Change the color of active link */
+        .nav-container a.active {
+            background-color: #3498db;
         }
-
-        table {
-            border: 5px solid #ccc;
-            border-collapse: collapse;
-            margin: 50px;
-            padding: 0;
-            width: 94%;
-            table-layout: auto;
+        .dashboard-container {
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
         }
-
-        .title {
-            text-align: center;
-            margin-bottom: -40px;
-        }
-
-        table tr {
-            background-color: #f8f8f8;
-            border: 1px solid #ddd;
-            padding: .35em;
-        }
-
-        table th,
-        table td {
-            padding: 10px;
-            text-align: center;
-            white-space: nowrap; /* prevent wrapping */
-            overflow: hidden; /* hide overflowing content */
-            text-overflow: ellipsis; /* show ellipsis for overflow */
-        }
-
-        table th {
-            font-size: .85em;
-            letter-spacing: .1em;
-            text-transform: uppercase;
-        }
-
-        table td[data-label="Wallet Address"] {
-            white-space: pre-wrap; /* wrap the text */
-        }
-
-        table td[data-label="Wallet Address"]:hover::before {
-            content: attr(data-fulltext);
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 10px;
-            background-color: rgba(0, 0, 0, 0.8);
-            color: white;
-            border-radius: 5px;
-            z-index: 999;
-            white-space: normal;
-            max-width: 300px;
-            word-wrap: break-word;
-        }
-
-        @media screen and (max-width: 600px) {
-            table {
-                border: 0;
-            }
-
-            title {
-                font-size: 1.3em;
-            }
-
-            table thead {
-                border: none;
-                clip: rect(0 0 0 0);
-                height: 1px;
-                margin: -1px;
-                overflow: hidden;
-                padding: 0;
-                position: absolute;
-                width: 1px;
-            }
-
-            table tr {
-                border-bottom: 3px solid #ddd;
-                display: block;
-                margin-bottom: .625em;
-            }
-
-            table td {
-                border-bottom: 1px solid #ddd;
-                display: block;
-                font-size: .8em;
-                text-align: right;
-                white-space: nowrap; /* prevent wrapping */
-                overflow: hidden; /* hide overflowing content */
-                text-overflow: ellipsis; /* show ellipsis for overflow */
-            }
-
-            table td::before {
-                content: attr(data-label);
-                float: left;
-                font-weight: bold;
-                text-transform: uppercase;
-            }
-
-            table td:last-child {
-                border-bottom: 0;
-            }
-        }
-
-        body {
-            font-family: "Open Sans", sans-serif;
-            line-height: 1.25;
-        }
-
-        .nav-container {
+        .camera-container {
+            position: relative;
             width: 100%;
-            height: 75px;
-            background-color: rgb(2, 67, 64);
-            display: flex;
-            justify-content: space-evenly;
-            align-items: center;
-            padding: 0 2rem;
-            box-shadow: 0px 0px 1rem gray;
-            filter: drop-shadow(0 0 10px #000);
+            max-width: 640px;
+            height: 480px;
+            margin: 20px auto;
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
-
-        #menu {
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        #video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
-
-        #menu li {
-            list-style-type: none;
-            margin: 35%;
-            font-size: 1.3rem;
-            font-weight: 800;
-            letter-spacing: 2px;
-            text-shadow: 2px 1px 1px #000;
-            cursor: pointer;
-        }
-
-        #menu li:hover {
-            text-decoration: underline;
-            text-underline-offset: 4px;
-            text-decoration-color: red;
-            cursor: pointer;
-            font-weight: 900;
-        }
-
-        .menubtn {
+        #canvas {
             display: none;
-            font-size: 35px;
-            cursor: pointer;
         }
-
-        @media only screen and (max-width: 600px) {
-            #menu {
-                display: none;
-            }
-
-            #menu li {
-                margin: 1rem;
-                height: 30px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-
-            .menubtn {
-                display: block;
-                font-size: 35px;
-            }
-
-            #menu {
-                width: 100%;
-                background-color: lightseagreen;
-                position: absolute;
-                top: 4.6rem;
-                right: 0;
-                text-align: center;
-            }
-
-            #menu li:hover {
-                filter: saturate(150%) drop-shadow(1px 1px 3rem red);
-                text-shadow: 0px 0px 5rem;
-            }
+        .camera-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 300px;
+            border: 3px solid rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            pointer-events: none;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+        }
+        .camera-guide {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            pointer-events: none;
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+        .recognition-status {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            color: white;
+            font-weight: 600;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+        .recognition-status.known {
+            background-color: #2ecc71;
+        }
+        .recognition-status.unknown {
+            background-color: #e74c3c;
+        }
+        .recognition-status.processing {
+            background-color: #f1c40f;
+        }
+        .alert-history {
+            background-color: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .alert-history h4 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+        }
+        .alert-item {
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+            border-left: 4px solid #e74c3c;
+            transition: transform 0.2s;
+        }
+        .alert-item:hover {
+            transform: translateX(5px);
+        }
+        .orders-section {
+            background-color: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .table {
+            margin-top: 15px;
+        }
+        .table thead th {
+            background-color: #f8f9fa;
+            border-bottom: 2px solid #dee2e6;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+        .table tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+        .btn-success {
+            background-color: #2ecc71;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        .btn-success:hover {
+            background-color: #27ae60;
+        }
+        .section-title {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section-title i {
+            color: #3498db;
         }
     </style>
 </head>
 
 <body>
     <div class="nav-container">
-        <ul id="menu">
-            <li class="active"><a href="/admindashboard" class="active">Home</a></li>
-            <li style="color:white"><a href="/iotplug">IoT&nbsp;Plug</a></li>
-            <li style="color: white"><a href="/logout">Logout</a></li>
-        </ul>
-    </div> <br /><br />
-    <h3 class="title">Order Details</h3>
-    <table>
-        <thead>
-            <tr>
-                <th scope="col">Order Id</th>
-                <th colspan="4">Wallet Address</th>
-                <th scope="col">Status</th>
-                <th scope="col">Name</th>
-                <th scope="col">Location</th>
-                <th colspan="2">Type</th>
-                <th scope="col">Kgs</th>
-                <th scope="col">Action1</th>
-                <th scope="col">Action2</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for i in data %}
-                <tr>
-                    <td data-label="Order Id">{{ i[0] }}</td>
-                    <td colspan="4">{{i[1]}}</td>
-                    <td data-label="Status">{{ i[2] }}</td>
-                    <td data-label="Name">{{ i[3] }}</td>
-                    <td data-label="Location">{{ i[4] }}</td>
-                    <td data-label="Type" colspan="2">{{ i[5] }}</td>
-                    <td data-label="Kgs">{{ i[6] }}</td>
-                    {%if i[2]==0%}
-                        <th scope="col"><a class="btn btn-success" href="/confirmOrder/{{i[0]}}/1">Confirm</button></th>
-                        <th scope="col"><a class="btn btn-danger" href="/confirmOrder/{{i[0]}}/2">Cancel</button></th>
-                    {%endif%}
-                    {%if i[2]==1%}
-                        <th scope="col"><label>Confirmed</label></th>
-                        <th scope="col"><a class="btn btn-warning" href="/confirmOrder/{{i[0]}}/3">Deliver</a></th>
-                    {%endif%}
-                    {%if i[2]==2%}
-                        <th scope="col"><label>Rejected</label></th>
-                        <th scope="col"><label>Cancelled</label></th>
-                    {%endif%}
-                    {%if i[2]==3%}
-                        <th scope="col"><label>Confirmed</label></th>
-                        <th scope="col"><label>Delivered</label></th>
-                    {%endif%}
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <h4 class="text-white mb-0">Admin Dashboard</h4>
+                <div>
+                    <a href="/admindashboard" class="active"><i class="fas fa-home"></i> Home</a>
+                    <a href="/iotplug"><i class="fas fa-plug"></i> IoT Plug</a>
+                    <a href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="dashboard-container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="section-title">
+                    <i class="fas fa-camera"></i>
+                    <span>Face Recognition System</span>
+                </div>
+                <div class="camera-container">
+                    <video id="video" autoplay playsinline></video>
+                    <canvas id="canvas"></canvas>
+                    <div class="camera-overlay"></div>
+                    <div class="camera-guide">Position your face in the circle</div>
+                    <div id="recognitionStatus" class="recognition-status processing">
+                        <i class="fas fa-spinner fa-spin"></i> Processing...
+                    </div>
+                </div>
+                
+                <div class="alert-history">
+                    <h4><i class="fas fa-bell"></i> Recent Alerts</h4>
+                    <div id="alertList"></div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="section-title">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Order Management</span>
+                </div>
+                <div class="orders-section">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Retailer</th>
+                                    <th>Status</th>
+                                    <th>Name</th>
+                                    <th>Location</th>
+                                    <th>Product Type</th>
+                                    <th>KGs</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for row in data %}
+                                <tr>
+                                    <td>{{ row[0] }}</td>
+                                    <td>{{ row[1] }}</td>
+                                    <td>{{ row[2] }}</td>
+                                    <td>{{ row[3] }}</td>
+                                    <td>{{ row[4] }}</td>
+                                    <td>{{ row[5] }}</td>
+                                    <td>{{ row[6] }}</td>
+                                    <td>
+                                        <a href="/confirmOrder/{{ row[0] }}/1" class="btn btn-success btn-sm">
+                                            <i class="fas fa-check"></i> Confirm
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let video = document.getElementById('video');
+            let canvas = document.getElementById('canvas');
+            let recognitionStatus = document.getElementById('recognitionStatus');
+            let alertList = document.getElementById('alertList');
+            let stream = null;
+            let lastAlertTime = 0;
+            const ALERT_COOLDOWN = 60000; // 1 minute cooldown between alerts
+
+            async function startCamera() {
+                try {
+                    stream = await navigator.mediaDevices.getUserMedia({
+                        video: {
+                            width: { ideal: 640 },
+                            height: { ideal: 480 },
+                            facingMode: 'user',
+                            frameRate: { ideal: 30 }
+                        },
+                        audio: false
+                    });
+
+                    video.srcObject = stream;
+                    await video.play();
+                    
+                    // Start continuous face recognition
+                    setInterval(recognizeFace, 1000); // Check every second
+                } catch (err) {
+                    console.error('Camera error:', err);
+                    recognitionStatus.innerHTML = '<i class="fas fa-exclamation-circle"></i> Camera Error';
+                    recognitionStatus.className = 'recognition-status unknown';
+                }
+            }
+
+            async function recognizeFace() {
+                try {
+                    canvas.width = video.videoWidth;
+                    canvas.height = video.videoHeight;
+                    canvas.getContext('2d').drawImage(video, 0, 0);
+
+                    const formData = new FormData();
+                    formData.append('image', canvas.toDataURL('image/jpeg'));
+
+                    const response = await fetch('/recognize_face', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        recognitionStatus.innerHTML = `<i class="fas fa-user-check"></i> Recognized: ${result.name}`;
+                        recognitionStatus.className = 'recognition-status known';
+                    } else {
+                        recognitionStatus.innerHTML = '<i class="fas fa-user-slash"></i> Unknown Face';
+                        recognitionStatus.className = 'recognition-status unknown';
+                        
+                        // Check if enough time has passed since last alert
+                        const currentTime = Date.now();
+                        if (currentTime - lastAlertTime >= ALERT_COOLDOWN) {
+                            // Send alert with image
+                            const alertResponse = await fetch('/send_alert', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({
+                                    message: 'Unknown face detected in admin dashboard',
+                                    image: canvas.toDataURL('image/jpeg')
+                                })
+                            });
+                            
+                            if (alertResponse.ok) {
+                                lastAlertTime = currentTime;
+                                addAlert('Unknown face detected - Alert sent');
+                            }
+                        }
+                    }
+                } catch (err) {
+                    console.error('Recognition error:', err);
+                    recognitionStatus.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Error';
+                    recognitionStatus.className = 'recognition-status unknown';
+                }
+            }
+
+            function addAlert(message) {
+                const alertItem = document.createElement('div');
+                alertItem.className = 'alert-item';
+                alertItem.innerHTML = `
+                    <i class="fas fa-exclamation-circle"></i>
+                    ${new Date().toLocaleTimeString()} - ${message}
+                `;
+                alertList.insertBefore(alertItem, alertList.firstChild);
+                
+                // Keep only the last 10 alerts
+                if (alertList.children.length > 10) {
+                    alertList.removeChild(alertList.lastChild);
+                }
+            }
+
+            startCamera();
+
+            window.addEventListener('beforeunload', () => {
+                if (stream) {
+                    stream.getTracks().forEach(track => track.stop());
+                }
+            });
+        });
+    </script>
 </body>
 </html>
 

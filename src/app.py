@@ -1,9 +1,19 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 from pymongo import MongoClient
 from bson import ObjectId
 import os
 from web3 import Web3,HTTPProvider
 import json
+import face_recognition
+import numpy as np
+from PIL import Image
+import io
+import base64
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from email.mime.image import MIMEImage
+from datetime import datetime
 
 def connectWithBlockchain():
     web3=Web3(HTTPProvider('http://127.0.0.1:7545'))
@@ -20,6 +30,70 @@ def connectWithBlockchain():
 app = Flask(__name__)
 app = Flask(__name__, static_url_path='/static')
 app.secret_key='123456789'
+
+# Email configuration
+app.config['SMTP_SERVER'] = "smtp.gmail.com"
+app.config['SMTP_PORT'] = 587
+app.config['SMTP_USERNAME'] = "kr4785543@gmail.com"
+app.config['SMTP_PASSWORD'] = "qhuzwfrdagfyqemk"
+app.config['ALERT_EMAIL'] = "parvathanenimadhu@gmail.com"
+
+def send_email_alert(message, image_data=None):
+    try:
+        msg = MIMEMultipart()
+        msg['From'] = app.config['SMTP_USERNAME']
+        msg['To'] = app.config['ALERT_EMAIL']
+        msg['Subject'] = 'Security Alert: Unknown Face Detected'
+        
+        body = f"""
+        Security Alert
+        
+        An unknown face was detected in the admin dashboard.
+        Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+        
+        Details:
+        {message}
+        
+        This is an automated alert from the Poultry Management System.
+        """
+        
+        msg.attach(MIMEText(body, 'plain'))
+        
+        # Attach the image if provided
+        if image_data:
+            # Remove the data URL prefix
+            image_data = image_data.split(',')[1]
+            image_bytes = base64.b64decode(image_data)
+            
+            # Create the attachment
+            image = MIMEImage(image_bytes)
+            image.add_header('Content-Disposition', 'attachment', filename='unknown_face.jpg')
+            msg.attach(image)
+        
+        server = smtplib.SMTP(app.config['SMTP_SERVER'], app.config['SMTP_PORT'])
+        server.starttls()
+        server.login(app.config['SMTP_USERNAME'], app.config['SMTP_PASSWORD'])
+        server.send_message(msg)
+        server.quit()
+        
+        return True
+    except Exception as e:
+        print(f"Error sending email: {str(e)}")
+        return False
+
+@app.route('/send_alert', methods=['POST'])
+def send_alert():
+    try:
+        data = request.get_json()
+        message = data.get('message', 'Unknown face detected')
+        image_data = data.get('image')
+        
+        if send_email_alert(message, image_data):
+            return jsonify({'success': True, 'message': 'Alert sent successfully'})
+        else:
+            return jsonify({'success': False, 'message': 'Failed to send alert'})
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)})
 
 dbClient=MongoClient('mongodb://127.0.0.1:27017/')
 db=dbClient['poultrydb']
@@ -140,20 +214,23 @@ def consumerlog():
 
 @app.route('/admindashboard')
 def admindashboard():
-    contract,web3=connectWithBlockchain()
-    _oemails,_oorderids,_oretailers,_ostatuses,_onames,_olcations,_oproducttypes,_okgs=contract.functions.viewOrders().call()
-    data=[]
-    for i in range(len(_oorderids)):
-        dummy=[]
-        dummy.append(_oorderids[i])
-        dummy.append(_oretailers[i])
-        dummy.append(_ostatuses[i])
-        dummy.append(_onames[i])
-        dummy.append(_olcations[i])
-        dummy.append(_oproducttypes[i])
-        dummy.append(_okgs[i])
-        data.append(dummy)
-    return render_template('admin.html',data=data)
+    if session['email']=='poultry@gmail.com':
+        contract,web3=connectWithBlockchain()
+        _oemails,_oorderids,_oretailers,_ostatuses,_onames,_olcations,_oproducttypes,_okgs=contract.functions.viewOrders().call()
+        data=[]
+        for i in range(len(_oorderids)):
+            dummy=[]
+            dummy.append(_oorderids[i])
+            dummy.append(_oretailers[i])
+            dummy.append(_ostatuses[i])
+            dummy.append(_onames[i])
+            dummy.append(_olcations[i])
+            dummy.append(_oproducttypes[i])
+            dummy.append(_okgs[i])
+            data.append(dummy)
+        return render_template('admin.html',data=data)
+    else:
+        return redirect('/')
 
 @app.route('/confirmOrder/<id1>/<id2>')
 def confirmOrder(id1,id2):
@@ -338,6 +415,120 @@ def retailerdata():
         dummy.append(_okgs[i])
         data.append(dummy)
     return render_template('retailerdata.html',data1=data)
+
+@app.route('/face_training')
+def face_training():
+    if session['email']=='poultry@gmail.com':
+        return render_template('face_training.html')
+    else:
+        return redirect('/')
+
+@app.route('/face_recognition')
+def face_recognition_page():
+    return render_template('face_recognition.html')
+
+@app.route('/train_face', methods=['POST'])
+def train_face():
+    try:
+        # Get the image data from the request
+        image_data = request.form['image'].split(',')[1]
+        image_bytes = base64.b64decode(image_data)
+        image = Image.open(io.BytesIO(image_bytes))
+        
+        # Convert to numpy array
+        image_array = np.array(image)
+        
+        # Get the person's name
+        name = request.form['name']
+        
+        # Create directory for face data if it doesn't exist
+        face_data_dir = os.path.join(app.static_folder, 'face_data')
+        if not os.path.exists(face_data_dir):
+            os.makedirs(face_data_dir)
+        
+        # Get face encoding
+        face_encodings = face_recognition.face_encodings(image_array)
+        
+        if not face_encodings:
+            return jsonify({'success': False, 'message': 'No face detected in the image'})
+        
+        if len(face_encodings) > 1:
+            return jsonify({'success': False, 'message': 'Multiple faces detected. Please ensure only one face is in the image'})
+        
+        # Save the face encoding with a unique identifier
+        face_encoding = face_encodings[0]
+        existing_files = [f for f in os.listdir(face_data_dir) if f.startswith(name + '_')]
+        file_number = len(existing_files) + 1
+        np.save(os.path.join(face_data_dir, f'{name}_{file_number}.npy'), face_encoding)
+        
+        return jsonify({'success': True, 'message': f'Face {file_number} trained successfully'})
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)})
+
+@app.route('/recognize_face', methods=['POST'])
+def recognize_face():
+    try:
+        # Get the image data from the request
+        image_data = request.form['image'].split(',')[1]
+        image_bytes = base64.b64decode(image_data)
+        image = Image.open(io.BytesIO(image_bytes))
+        
+        # Convert to numpy array
+        image_array = np.array(image)
+        
+        # Get face encoding from the image
+        face_encodings = face_recognition.face_encodings(image_array)
+        
+        if not face_encodings:
+            return jsonify({'success': False, 'message': 'No face detected in the image'})
+        
+        if len(face_encodings) > 1:
+            return jsonify({'success': False, 'message': 'Multiple faces detected. Please ensure only one face is in the image'})
+        
+        face_encoding = face_encodings[0]
+        
+        # Load all known face encodings
+        face_data_dir = os.path.join(app.static_folder, 'face_data')
+        known_face_encodings = []
+        known_face_names = []
+        
+        for filename in os.listdir(face_data_dir):
+            if filename.endswith('.npy'):
+                name = filename.split('_')[0]  # Get name without the number
+                encoding = np.load(os.path.join(face_data_dir, filename))
+                known_face_encodings.append(encoding)
+                known_face_names.append(name)
+        
+        if not known_face_encodings:
+            return jsonify({'success': False, 'message': 'No trained faces found'})
+        
+        # Compare with known faces
+        matches = face_recognition.compare_faces(known_face_encodings, face_encoding)
+        
+        if True in matches:
+            # Get all matches for the same person
+            match_indices = [i for i, match in enumerate(matches) if match]
+            # Count occurrences of each name in matches
+            name_counts = {}
+            for idx in match_indices:
+                name = known_face_names[idx]
+                name_counts[name] = name_counts.get(name, 0) + 1
+            
+            # Get the name with the most matches
+            best_match = max(name_counts.items(), key=lambda x: x[1])
+            name = best_match[0]
+            confidence = best_match[1] / len(matches) * 100
+            
+            return jsonify({
+                'success': True, 
+                'name': name,
+                'confidence': round(confidence, 2)
+            })
+        else:
+            return jsonify({'success': False, 'message': 'No matching face found'})
+            
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)})
 
 # Dashboard route
 if __name__ == '__main__':
